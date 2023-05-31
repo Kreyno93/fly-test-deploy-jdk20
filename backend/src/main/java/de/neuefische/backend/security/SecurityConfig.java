@@ -2,7 +2,7 @@ package de.neuefische.backend.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -28,17 +28,33 @@ public class SecurityConfig {
         CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
         requestHandler.setCsrfRequestAttributeName(null);
 
+        //new code for Spring 3.1 and newer (not sure if 3.0.6 is supported as well)
+
         return http
                 .csrf(csrf -> csrf
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                         .csrfTokenRequestHandler(requestHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
-                .httpBasic(Customizer.withDefaults())
-                .authorizeHttpRequests()
-                .requestMatchers("/api/cars").authenticated()
-                .requestMatchers("/user/**").permitAll()
-                .anyRequest().authenticated()
-                .and().build();
+                .httpBasic(basic -> basic.authenticationEntryPoint(
+                        (request, response, authException) ->
+                                response.sendError(
+                                        HttpStatus.UNAUTHORIZED.value(),
+                                        HttpStatus.UNAUTHORIZED.getReasonPhrase()
+                                )))
+                .authorizeHttpRequests(auth -> {
+                    auth.requestMatchers(
+                            ("/api/**")).authenticated();
+                    auth.anyRequest().permitAll();
+                })
+                .build();
+
+        // OLD CODE. compatible with older spring versions.
+//                .httpBasic(Customizer.withDefaults())
+//                .authorizeHttpRequests()
+//                .requestMatchers("/api/cars").authenticated()
+//                .requestMatchers("/user/**").permitAll()
+//                .anyRequest().authenticated()
+//                .and().build();
     }
 
 }
