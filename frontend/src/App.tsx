@@ -24,12 +24,10 @@ function App() {
             <header className="App-header">
                 <Routes>
                     <Route path={"/"} element={<Homepage/>}/>
-
                     <Route element={<ProtectedRoutes user={user}/>}>
                         <Route path={"/add-car"} element={<AddCar/>}/>
                         <Route path={"/cars"} element={<CarGallery/>}/>
                     </Route>
-
                     <Route path={"/login"} element={<LoginPage login={login}/>}/>
                 </Routes>
             </header>

@@ -7,9 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CarDTO{
-       private String brand;
-       private String model;
+public class CarDTO {
+
+    private String brand;
+    private String model;
 
 
 }

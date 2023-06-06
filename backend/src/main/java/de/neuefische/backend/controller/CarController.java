@@ -16,7 +16,7 @@ public class CarController {
     private final CarService carService;
 
     @GetMapping
-    List<Car> findAllCars(){
+    List<Car> findAllCars() {
         return carService.findAllCars();
     }
 
@@ -24,4 +24,5 @@ public class CarController {
     Car saveCar(@RequestBody CarDTO car) {
         return carService.saveCar(car);
     }
+
 }

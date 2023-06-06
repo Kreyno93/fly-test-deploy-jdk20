@@ -34,6 +34,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                         .csrfTokenRequestHandler(requestHandler))
+
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                 .httpBasic(basic -> basic.authenticationEntryPoint(
                         (request, response, authException) ->
@@ -47,14 +48,6 @@ public class SecurityConfig {
                     auth.anyRequest().permitAll();
                 })
                 .build();
-
-        // OLD CODE. compatible with older spring versions.
-//                .httpBasic(Customizer.withDefaults())
-//                .authorizeHttpRequests()
-//                .requestMatchers("/api/cars").authenticated()
-//                .requestMatchers("/user/**").permitAll()
-//                .anyRequest().authenticated()
-//                .and().build();
     }
 
 }
