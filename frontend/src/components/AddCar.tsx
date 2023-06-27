@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from "axios";
+import {toast} from "react-toastify";
 
 function AddCar() {
 
@@ -16,12 +17,16 @@ function AddCar() {
 
     const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        axios.post("/api/cars", {brand, model}).then((response) => {
+        axios.post("/api/cars", {brand, model})
+            .then((response) => {
             console.log(response.data);
         }).then(() => {
             setBrand("");
             setModel("");
         })
+            .then(() => toast.success("New Car was added"))
+            .catch((e) => toast.error(e.message))
+
     }
 
     return (

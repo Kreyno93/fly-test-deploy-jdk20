@@ -63,4 +63,14 @@ class CarControllerTest {
                 .andExpect(jsonPath("$.id").isNotEmpty());
     }
 
+    @Test
+    @WithMockUser(username = "user", password = "123")
+    void getCarById_ShouldReturn404_WhenIdIsInvalid() throws Exception {
+        //GIVEN
+
+        //WHEN&THEN
+        mvc.perform(MockMvcRequestBuilders.get("/api/cars/6464"))
+                .andExpect(status().isNotFound());
+    }
+
     }

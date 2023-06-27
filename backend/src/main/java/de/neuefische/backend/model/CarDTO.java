@@ -6,11 +6,11 @@ import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
-public class CarDTO {
+public class CarDTO{
 
-    private String brand;
-    private String model;
+       private String brand;
+
+       private String model;
 
 
 }

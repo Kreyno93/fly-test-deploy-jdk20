@@ -20,6 +20,12 @@ public class CarController {
         return carService.findAllCars();
     }
 
+    @GetMapping("/{id}")
+    Car findCarById(@PathVariable String id){
+        return carService.findCarById(id);
+    }
+
+
     @PostMapping
     Car saveCar(@RequestBody CarDTO car) {
         return carService.saveCar(car);

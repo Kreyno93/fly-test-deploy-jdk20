@@ -47,6 +47,7 @@ public class SecurityConfig {
                             ("/api/**")).authenticated();
                     auth.anyRequest().permitAll();
                 })
+
                 .build();
     }
 
